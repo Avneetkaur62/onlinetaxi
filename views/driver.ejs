@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%-include("header")%>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <%-include("navbar")%>
+
+    <section class="inner-banner">
+        <div class="container">
+            <ul class="thm-breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><span class="sep">.</span></li>
+                <li><span class="page-title">Our Drivers</span></li>
+            </ul><!-- /.thm-breadcrumb -->
+            <h2>Our Drivers</h2>
+        </div><!-- /.container -->
+    </section><!-- /.inner-banner -->
+    <section class="team-style-one team-page">
+        <div class="container">
+            <div class="row">
+                <% drivers.forEach(dri => { %>
+                <div class="col-lg-4">
+                    <div class="single-team-one">
+                        <div class="image-block">
+                            <img src="<%= dri.photo %>" style="width: 250px; height: 255px" alt="Awesome Image"/>
+                        </div><!-- /.image-block -->
+                        <div class="text-block">
+                            <h3><%= dri.driver %></h3>
+
+
+                            <a href="/single-driver/<%= dri.email %>"style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" class="book-taxi-btn">View Details</a><!-- /.feature-list -->
+
+                        </div><!-- /.text-block -->
+                    </div><!-- /.single-team-one -->
+                </div>
+                    <% }) %><!-- /.col-lg-4 -->
+
+                    <!-- /.col-lg-4 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.team-style-one -->
+</div>
+<%-include("footer")%>
+</body>
+</html>

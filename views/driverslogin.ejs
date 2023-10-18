@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%-// include('headerfiles') %>
+    <%- include("header") %>
+</head>
+<body>
+<%- //include("publicheader.ejs") %>
+<%- //include("driversheader")%>
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">  Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Drivers Login</span></li>
+        </ul>
+        <h2>Login</h2>
+    </div>
+</section>
+<div class="container mt-3">
+    <h1></h1>
+    <div class="container">
+        <form id="loginForm">
+            <div class="mb-2">
+                <label for="email" class="form-label"> Email : </label>
+                <input type="text" name="email" id="email" class="form-control" required
+                       data-msg-required="Email is required"/>
+            </div>
+            <div class="mb-2">
+                <label for="pass" class="form-label"> Password: </label>
+                <input type="password" name="pass" id="pass" class="form-control" minlength="6" maxlength="15" required
+                       data-msg-required="Password is required"/>
+            </div>
+            <div class="mb-2">
+                <button class="btn btn-primary" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  id="btn" type="button" onclick="login()">Login</button>
+                <div id="output"></div>
+            </div>
+        </form>
+    </div>
+</div>
+<%-include("footer")%>
+<script>
+    function login() {
+        // alert();
+        $("#loginForm").validate();
+        if ($("#loginForm").valid()) {
+            var email = document.getElementById("email").value;
+            var pass = document.getElementById("pass").value;
+            // console.log(username + " " + pass);
+            let data = new FormData();
+            data.append("email", email);
+            data.append("pass", pass);
+            let http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.response == "success") {
+                        document.getElementById("loginForm").reset();
+                        document.getElementById("output").innerHTML = "<div class='alert alert-success'>Login successful </div>"
+                        document.location.href = "/drivers/drivershome";
+                    } else {
+                        document.getElementById("loginForm").reset();
+                        document.getElementById("output").innerHTML = "<div class='alert alert-danger'>invalid username or password. Try again later</div>"
+                    }
+                }
+            }
+            http.open("post", "/driversloginaction", true);
+            http.send(data);
+        } else {
+            document.getElementById("btn").value = "Loading....";
+        }
+    }
+</script>
+</body>
+</html>

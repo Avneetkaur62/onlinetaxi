@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Categories </title>
+    <%- //include('headerfiles') %>
+    <%-include("header")%>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<%- include('adminheader') %>
+<%- //include("navbar") %>
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Taxi Type</span></li>
+        </ul>
+        <h2>Taxi Type </h2>
+    </div>
+</section>
+<div class="container">
+    <h1> </h1>
+    <div class="container">
+        <form id="form">
+            <div class="mb-2">
+                <label for="taxitype" class="form-label"> Taxi Type: </label>
+                <input type="text" name="taxitype" id="taxitype" class="form-control" required
+                       data-msg-required="Taxi Name is Required"/>
+            </div>
+
+            <div class="mb-2">
+                <button class="btn btn-primary" id="btn" type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  onclick="taximodel()">SUBMIT</button>
+                <div id="output"></div>
+            </div>
+        </form>
+    </div>
+</div>
+<%-include("footer")%>
+<script>
+    function taximodel() {
+        // console.log("********")
+        $("#form").validate();
+        if ($("#form").valid()) {
+            let formcntrls = document.getElementById("form").elements;
+            let data = new FormData();
+            for (let i = 0; i < formcntrls.length; i++) {
+                if (formcntrls[i].type != "button")
+                    data.append(formcntrls[i].name, formcntrls[i].value);
+                // alert(formcntrls[i].name + " " + formcntrls[i].value)
+            }
+            // console.log(data);
+            let http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.response);
+                    if (this.response == "success") {
+                        document.getElementById("form").reset();
+                        document.getElementById("output").innerHTML = "<div class='alert alert-success'>name entered</div>"
+                    } else {
+                        document.getElementById("output").innerHTML = "<div class='alert alert-danger'>Name of Taxi does not entered</div>"
+                    }
+                }
+            }
+            http.open("post", "/admin/taxitypeaction", true);
+            http.send(data)
+        } else {
+            document.getElementById("btn").value = "Loading....";
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <%-include("header")%>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<%-include("navbar")%>
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Our Driver</span></li>
+        </ul><!-- /.thm-breadcrumb -->
+        <h2>"<%= drivers.driver %>"</h2>
+    </div><!-- /.container -->
+</section><!-- /.inner-banner -->
+<section class="single-taxi-details-one">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="image-block">
+                    <img src="<%= drivers.photo %>" alt="Awesome Image"/>
+                    <!--                    <div class="icon-block">-->
+                    <!--                        <i class="conexi-icon-mercedes-benz"></i>-->
+                    <!--                    </div>-->
+                    <!-- /.icon-block -->
+                </div><!-- /.image-block -->
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-6">
+                <div class="content-block">
+                    <div class="block-title">
+                        <div class="dot-line"></div><!-- /.dot-line -->
+                        <p>Driver Details</p>
+                        <h2><%= drivers.driver %></h2>
+                    </div><!-- /.block-title -->
+                    <hr class="style-one" />
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <ul class="features-list">
+                                <li>
+                                    <span class="name-line">Name:</span>
+                                    <span class="price-line"><%= drivers.driver %></span>
+                                </li>
+                                <li>
+                                    <span class="name-line">Phone:</span>
+                                    <span class="price-line"><%= drivers.phone %></span>
+                                </li>
+                                <li>
+                                    <span class="name-line">Email:</span>
+                                    <span class="price-line"><%= drivers.email %></span>
+                                </li>
+                            </ul><!-- /.feature-list -->
+                        </div><!-- /.col-lg-7 -->
+                    </div><!-- /.row -->
+
+                </div><!-- /.content-block -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.single-taxi-details-one -->
+
+
+<%-include("footer")%>
+</body>
+</html>

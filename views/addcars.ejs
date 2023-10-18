@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--    <meta name="viewport"-->
+    <!--          content="width=device-width,user-scalable=no,initial-scaler=1.0,maximum-scale=1.0,minimum-scale=1.0">-->
+    <meta http-equiv="X-UA-compatible" content="ie=edge">
+    <title> ABOUT CARS</title>
+    <%- // include("headerfiles")  %>
+    <%- include("header") %>
+</head>
+<body onload="getdata(); addcars();">
+<%- include("adminheader") %>
+
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Add Cars</span></li>
+        </ul>
+        <h2>Add Cars</h2>
+    </div>
+</section>
+
+<div class="container-fluid py-5">
+    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+        Add Car
+    </button>
+
+    <div class="card mt-5">
+        <h1> Cars Details </h1>
+        <div id="output"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" arial-labelledby="exampleModalLabel" arial-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Add Cars</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" arial-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+                <form id="form">
+                    <div class="row">
+                        <div class="col-md-6 mt-2">
+                            <label for="type">  Car Type:</label>
+                            <select id="type" class="form-select"></select>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="carname">  Car Name:</label>
+                            <input type="text" name="carname" id="carname" class="form-control" required
+                                   data-msg-required="Carname is Required"/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="brand">  Brand :</label>
+                            <input type="text" name="brand" id="brand" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="model">  Model:</label>
+                            <input type="text" name="model" id="model" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="color">  Color:</label>
+                            <input type="text" name="color" id="color" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="description">  Description:</label>
+                            <input type="text" name="description" id="description" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="photo">  Photo:</label>
+                            <input type="file" name="photo" id="photo" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="reg.no">  Registeration Number:</label>
+                            <input type="text" name="reg.no" id="reg.no" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="insurance validity"> Provide Car Insurance validity :</label>
+                            <input type="text" name="color" id="insurance_validity" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="rent">   Rent :</label>
+                            <input type="text" name="rent" id="rent" class="form-control" required/>
+                        </div>
+
+
+                        <div class="col-md-6 mt-2">
+                            <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" onclick="cars()" class="btn btn-primary btn-lg">Submit</button>
+                        </div>
+                        <div id="output"></div>
+                    </div>
+
+                </form>
+                <div id="response"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("footer") %>
+<script>
+    function getdata() {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let data = JSON.parse(this.response);
+                console.log(data);
+                let html = "<option> Please Select Car </option>";
+                for (let i = 0; i < data.length; i++) {
+                    // html += "<option value=" + data[i].type + " >" + data[i].type + "</option>";
+                    html += `<option value="${data[i].type}">${data[i].type}</option>`
+
+                }
+                document.getElementById("type").innerHTML = html;
+
+            }
+        }
+        http.open("get", "/admin/getTaxiType", true);
+        http.send();
+    }
+
+</script>
+
+<script>
+    // add
+    let cars = () => {
+        $("form").validate();
+        if ($("form").valid()) {
+            var car_name = document.getElementById("carname").value;
+            var brand = document.getElementById("brand").value;
+            var model = document.getElementById("model").value;
+            var color = document.getElementById("color").value;
+            var description = document.getElementById("description").value;
+            var photo = document.getElementById("photo").files[0];
+            var registration_no = document.getElementById("reg.no").value;
+            var insurance_validity = document.getElementById("insurance_validity").value;
+            var rent = document.getElementById("rent").value;
+            // var status = document.getElementById("status").value;
+            var cartype = document.getElementById("type").value;
+
+
+            let formData = new FormData();
+            formData.append("brand", brand)
+            formData.append("model", model)
+            formData.append("color", color)
+            formData.append("description", description)
+            formData.append("registration_no", registration_no)
+            formData.append("insurance_validity", insurance_validity)
+            formData.append("rent", rent)
+            // formData.append("status", status)
+            formData.append("cartype", cartype)
+            formData.append("photo", photo)
+            formData.append("car_name", car_name)
+
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.response)
+                    if (this.response == "inserted") {
+                        document.getElementById("form").reset();
+                        document.getElementById("response").innerHTML = "Data added successfully";
+                    } else {
+                        alert("Car Already Exist");
+                    }
+                }
+            }
+            // http.open("get", "/admin/carsaction?carname=" + car_name + "&id=" + id + "&brand=" + brand + "&model=" + model + "" + "&color=" + color + "description=" + description + "&photo=" + photo + "&reg.no=" + registration_no + "&insurance_validity=" + insurance_validity + "&rent=" + rent + "&status=" + status + "&type=" + cartype, true);
+            http.open("post", "/admin/carsaction", true);
+            http.send(formData);
+
+        }
+    }
+
+    // view
+    function addcars() {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                console.log(JSON.parse(this.response));
+                let output = '<div class="table-responsive"><table class="table">' +
+                    '<tr> <th> Sr.No.</th><th>Car Name</th><th> Brand</th><th> Model</th><th>Color</th><th>Description</th><th>Photo</th><th>Registration No.</th><th>Insurance validity</th><th>Rent</th><th>Status</th><th>Cartype</th></tr>';
+                if (this.response != "no data found") {
+                    let srno = 1;
+                    let data = JSON.parse(this.response);
+                    for (let i = 0; i < data.length; i++) {
+                        output += '<tr>' +
+                            '<td>' + (i + 1) + '</td>' +
+                            // '<td>' + data[i].id + '</td>' +
+                            '<td>' + data[i].carname + '</td>' +
+                            '<td>' + data[i].brand + '</td>' +
+                            '<td>' + data[i].model + '</td>' +
+                            '<td>' + data[i].color + '</td>' +
+                            '<td>' + data[i].description + '</td>' +
+                            '<td><img src="' + data[i].photo + '" alt="" style="height: 60px" /></td>' +
+                            '<td>' + data[i].reg_no + '</td>' +
+                            '<td>' + data[i].insurance_validity + '</td>' +
+                            '<td>' + data[i].rent + '</td>' +
+                            '<td>' + data[i].status + '</td>' +
+                            '<td>' + data[i].type + '</td>' +
+                            '<tr>'
+                        srno++;
+                    }
+                }
+                output += '</table></div>';
+                document.getElementById("output").innerHTML = output;
+            }
+        }
+        http.open("get", "/admin/addcarsaction", true);
+        http.send();
+    }
+
+</script>
+
+</body>
+</html>

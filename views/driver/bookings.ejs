@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <%- include("../header") %>
+</head>
+<body>
+
+<%- include("../driversheader") %>
+
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Bookings</span></li>
+        </ul><!-- /.thm-breadcrumb -->
+        <h2>Drivers Bookings</h2>
+    </div><!-- /.container -->
+</section>
+
+<div class="container py-5">
+    <% if(bookings.length > 0) { %>
+
+        <% bookings.forEach((booking) => { %>
+            <div class="card mb-5 shadow">
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>Booking ID: <%= booking.bid %></h4>
+                            </div>
+                            <div class="col-6 text-end">
+                                <% if(booking.bstatus === 'Assigned') { %>
+                                    <!--                                    <button type="button" class="btn btn-warning"-->
+                                    <!--                                            onclick="showDrivers('<%= booking.driver_email %>')">-->
+                                    <!--                                        Complete Booking-->
+                                    <!--                                    </button>-->
+
+                                    <a href="/drivers/complete-booking/<%= booking.bid %>" class="btn btn-warning">
+                                        Complete Booking
+                                    </a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Car Details -->
+                        <div class="col-md-6 mb-3">
+                            <h5 class="text-warning">Car Details</h5>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <a href="<%= booking.photo %>" target="_blank">
+                                        <img src="<%= booking.photo %>" alt="" style="width: 100%"
+                                             class="img-thumbnail">
+                                    </a>
+                                </div>
+                                <div class="col-lg-8">
+                                    <h6><%= booking.carname %>(<%= booking.model.trim() %>)</h6>
+                                    <span><b>Category: </b><%= booking.type %></span> <br>
+                                    <span><b>Brand: </b><%= booking.brand %>&nbsp;|&nbsp;<b>Rent: </b>&#x20b9;<%= booking.rent %></span>
+                                    <br>
+                                    <span><b>Description: </b><%= booking.description %></span> <br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other Details -->
+                        <div class="col-md-3 mb-3">
+                            <h5 class="text-warning">Other Details</h5>
+                            <span><b>Pickup: </b><%= booking.pickup %></span> <br>
+                            <span><b>Dropoff: </b><%= booking.dropoff %></span> <br>
+                            <span><b>Date: </b><%= booking.bdate %>&nbsp;|&nbsp;<b>Time: </b><%= booking.PickTime %></span>
+                            <br>
+                            <span><b>Status: </b></span> <span
+                                    class="badge rounded-pill bg-primary"><%= booking.bstatus %></span> <br>
+                        </div>
+
+                        <!-- Customer Details -->
+                        <div class="col-md-3 mb-3">
+                            <h5 class="text-warning">Customer Details</h5>
+                            <span><b>Name: </b><%= booking.firstname %></span> <br>
+                            <span><b>Phone: </b><%= booking.uphone %></span> <br>
+                            <span><b>Email: </b><%= booking.uemail %></span> <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+
+    <% } else { %>
+        <div class="alert alert-danger text-center">No Data Found...</div>
+    <% } %>
+</div>
+
+<%-include("../footer")%>
+
+</body>
+</html>

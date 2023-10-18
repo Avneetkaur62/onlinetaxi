@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%- include("header") %>
+</head>
+<body>
+
+<%- include("navbar") %>
+
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Our Taxies</span></li>
+        </ul><!-- /.thm-breadcrumb -->
+        <h2>Our Taxies</h2>
+    </div><!-- /.container -->
+</section><!-- /.inner-banner -->
+
+<section class="taxi-style-one taxi-page">
+
+
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane show active  animated fadeInUp" id="hybrid">
+            <div class="row">
+                <% cars.forEach(car => { %>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="single-taxi-one">
+                            <div class="inner-content">
+                                <img src="<%= car.photo %>" style="width: 221px; height: 180px" alt="Awesome Image"/>
+                                <!--                              <div class="?icon-block">-->
+                                <!--                                  <i class="conexi-icon-bmw"></i>-->
+                                <!--                              </div>-->
+                                <!-- /.icon-block -->
+                                <h3><%= car.carname %></h3>
+                                <!--                                    <h3>M5 2008 Model</h3>-->
+                                <ul class="feature-list">
+                                    <li>
+                                        <span class="name-line">Rent:</span>
+                                        <span class="price-line">&#x20b9; <%= car.rent %></span>
+                                    </li>
+                                    <li>
+                                        <span class="name-line">Brand:</span>
+                                        <span class="price-line"><%= car.brand %></span>
+                                    </li>
+                                </ul><!-- /.feature-list -->
+                                <a href="/single-taxi/<%= car.id %>" class="book-taxi-btn">View Details</a>
+                            </div><!-- /.inner-content -->
+                        </div><!-- /.single-taxi-one -->
+                    </div>
+                <% }) %>
+                <!-- /.col-lg-4 -->
+            </div>
+        </div>
+    </div><!-- /.tab-content -->
+    </div><!-- /.container -->
+</section><!-- /.taxi-style-one -->
+<section class="cta-style-one text-center">
+    <div class="container">
+        <p>Call 24 hour service available</p>
+        <h3>Call now and book <br> our taxi for your next ride</h3>
+        <a href="/taxi" class="cta-btn">Choose Your Taxi</a>
+    </div><!-- /.container -->
+</section><!-- /.cta-style-one -->
+
+<%- include("footer") %>
+
+</body>
+</html>

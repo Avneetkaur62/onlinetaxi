@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <%- include("../header") %>
+</head>
+<body>
+
+<%- include("../adminheader") %>
+
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Bookings</span></li>
+        </ul><!-- /.thm-breadcrumb -->
+        <h2>Assigned Bookings</h2>
+    </div><!-- /.container -->
+</section>
+
+<div class="container pt-5">
+
+    <% if(bookings.length > 0) { %>
+
+        <% bookings.forEach((booking) => { %>
+            <div class="card mb-5 shadow">
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4>Booking ID: <%= booking.bid %></h4>
+                            </div>
+                            <div class="col-lg-6 text-end">
+                                <% if(booking.bstatus === 'Assigned') { %>
+                                    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn btn-warning"
+                                            onclick="showDrivers('<%= booking.driver_email %>')">
+                                        Driver Details
+                                    </button>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Car Details -->
+                        <div class="col-md-8 mb-3">
+                            <h5 class="text-warning">Car Details</h5>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <a href="<%= booking.photo %>" target="_blank">
+                                        <img src="<%= booking.photo %>" alt="" style="width: 100%"
+                                             class="img-thumbnail">
+                                    </a>
+                                </div>
+                                <div class="col-lg-8">
+                                    <h6><%= booking.carname %>(<%= booking.model.trim() %>)</h6>
+                                    <span><b>Category: </b><%= booking.type %></span> <br>
+                                    <span><b>Brand: </b><%= booking.brand %>&nbsp;|&nbsp;<b>Rent: </b>&#x20b9;<%= booking.rent %></span>
+                                    <br>
+                                    <span><b>Description: </b><%= booking.description %></span> <br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other Details -->
+                        <div class="col-md-4 mb-3">
+                            <h5 class="text-warning">Other Details</h5>
+                            <span><b>Pickup: </b><%= booking.pickup %></span> <br>
+                            <span><b>Dropoff: </b><%= booking.dropoff %></span> <br>
+                            <span><b>Date: </b><%= booking.bdate %>&nbsp;|&nbsp;<b>Time: </b><%= booking.PickTime %></span>
+                            <br>
+                            <span><b>Status: </b></span> <span
+                                    class="badge rounded-pill bg-primary"><%= booking.bstatus %></span> <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+
+    <% } else { %>
+        <div class="alert alert-danger text-center">No Data Found...</div>
+    <% } %>
+
+</div>
+
+<div class="modal fade" id="driverModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Driver Details</h5>
+                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <img src="" alt="" id="driverImage" style="width: 100%">
+                        </div>
+                        <div class="col-lg-6">
+                            <h5>Name: <span id="driverName"></span></h5>
+                            <h5>Email: <span id="driverEmail"></span></h5>
+                            <h5>Phone: <span id="driverPhone"></span></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("../footer") %>
+
+<script>
+    const showDrivers = (driverEmail) => {
+        // alert(driverEmail);
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                // console.log(this.response);
+                let data = JSON.parse(this.response)
+                console.log(data);
+                if (data.error !== '') {
+                    alert(data.error);
+                } else {
+                    document.getElementById('driverImage').src = data.driver.photo
+                    document.getElementById('driverName').innerText = data.driver.driver
+                    document.getElementById('driverEmail').innerText = data.driver.email
+                    document.getElementById('driverPhone').innerText = data.driver.phone
+                    $("#driverModal").modal('show')
+                }
+            }
+        };
+        request.open("GET", "/user/view-driver-info?driverEmail=" + driverEmail, true);
+        request.send();
+    }
+</script>
+
+</body>
+</html>

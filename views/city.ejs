@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> SignUp </title>
+    <link href="/css/bootstrap.css" rel="stylesheet"/>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%- //include("headerfiles") %>
+    <%- include("header") %>
+</head>
+
+<body onload="viewcities()">
+<%-include("adminheader")%>
+<%-// include("navbar") %>
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/admin/"> Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">City</span></li>
+        </ul>
+        <h2>City</h2>
+    </div>
+</section>
+<div class="container">
+    <h1>  </h1>
+    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addcityModal">
+        Add City
+    </button>
+    <br>
+    <h1> Cities Available </h1>
+    <div id="output"> </div>
+    <!--  add car Modal -->
+    <div class="modal fade" id="addcityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">CITY</h5>
+                    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="cityform">
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <label for="cityname"> Enter City Name: </label>
+                                <input type="text" name="cityname" id="cityname" class="form-control" required
+                                       data-msg-required="City Name is required"/>
+
+                            </div>
+                            <div class="col-md-6 ">
+                                <label for="photo"> Enter Cover Photo of the city: </label>
+                                <input type="file" name="photo" id="photo" class="form-control"/>
+
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <button type="button" onclick="city()" class="btn btn-primary btn-lg"> SUBMIT
+                                </button>
+                            </div>
+                            <div id="output1"> </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+<br>
+<!--<script src="/dist/jquery-3.6.3.js"></script>
+<script src="/dist/jquery.validate.js"></script>-->
+<%-include("footer")%>
+<script>
+    function viewcities(){
+        var http=new XMLHttpRequest();
+        http.onreadystatechange=function(){
+            if(this.readyState==4 && this.status==200){
+                let output='<table class="table">'+
+                    '<tr class="text-center"> <th>Car id </th> <th> City name</th>   <th>Photo </th>  </tr>';
+                if(this.response!="no data found"){
+                    let data=JSON.parse(this.response);
+                    for(let i=0;i<data.length;i++){
+                        output+='<tr class="text-center">'+
+                            '<td>' +data[i].cityid + '</td>'+
+                            '<td>' +data[i].cityname + '</td>'+
+                            '<td><img src="' + data[i].cityphoto + '" alt= "" style="height:130px;width:50%;" class="img-fluid"/></td>'+
+                            '</tr>';
+                    }
+                }
+                output+='</table>';
+                document.getElementById("output").innerHTML=output;
+
+            }
+        }
+        http.open("get","/admin/viewcity",true);
+        http.send();
+    }
+
+
+
+
+    let city=()=>{
+        $("#cityform").validate;
+        if($("#cityform").valid()){
+            var cityname= document.getElementById("cityname").value;
+            var photo= document.getElementById("photo").files[0];
+            let formData= new FormData();
+            formData.append("cityname",cityname);
+            formData.append("photo",photo);
+            var http=new XMLHttpRequest();
+            http.onreadystatechange=function(){
+                if(this.readyState==4 && this.status==200){
+                    if(this.response=="inserted"){
+                        document.getElementById("cityform").reset();
+                        document.getElementById("output1").innerHTML="City added successfully";
+                    }
+                }
+            }
+            http.open("post","/admin/cityaction",true);
+            http.send(formData);
+
+        }
+    }
+</script>
+
+</body>
+</html>

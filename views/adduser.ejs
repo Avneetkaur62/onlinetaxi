@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>User SignUp </title>
+
+    <link href="/css/bootstrap.css" rel="stylesheet"/>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%- include("header") %>
+    <%-// include("headerfiles") %>
+</head>
+<body>
+<div class="page-wrapper">
+    <section class="inner-banner">
+        <div class="container">
+            <ul class="thm-breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><span class="sep">.</span></li>
+                <li><a href="/userlogin">Login</a></li>
+                <li><span class="sep">.</span></li>
+                <li><span class="page-title">Contact</span></li>
+            </ul><!-- /.thm-breadcrumb -->
+            <h2>User Signup</h2>
+        </div><!-- /.container -->
+    </section>
+
+    <%- //include("publicheader")%>
+    <div class="container">
+        <h1> CREATE YOUR ACCOUNT </h1>
+        <form id="usersignupform">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <label for="fname"> Enter First Name : </label>
+                    <input type="text" id="fname" name="fname" class="form-control" required
+                           data-msg-required=" First name is required"/>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="lname"> Enter Last Name : </label>
+                    <input type="text" id="lname" name="lname" class="form-control" required
+                           data-msg-required=" Last name is required"/>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="gender"> Select Gender: </label>
+                    <div class ="mt-2">
+                        <input class ="form-check-input" type="radio" name="gender" id="female" value="female">
+                        <label class ="form-check-label" for="female">
+                            Female &nbsp &nbsp
+
+                        </label>
+                        <input class ="form-check-input" type="radio" name="gender" id="male" value="male">
+                        <label class ="form-check-label" for="male">
+                            Male &nbsp &nbsp
+                        </label>
+
+                        <input class ="form-check-input" type="radio" name="gender" id="transgender" value="transgender">
+                        <label class ="form-check-label" for="transgender">
+                            Transgender &nbsp &nbsp
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-md-6 ">
+                    <label for="phone"> Enter Phone No. :</label>
+                    <input type="phone" name="phone" id="phone" class="form-control" required data-msg-required="Phone number is required"/>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="email"> Enter Email: </label>
+                    <input type="email" id="email" name="email" class="form-control" required data-msg-required="Email is required"/>
+                </div>
+
+                <div class="col-md-6 ">
+                    <label for="password"> Enter Password: </label>
+                    <input type="password" name="password" minlength="6" maxlength="15" id="password" class="form-control" required
+                           data-msg-required="password is required "/>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="cpassword">Confirm Password:</label>
+                    <input type="password" name="cpassword" id="cpassword" class="form-control" required data-rule-required="true"
+                           data-rule-equalto="#password" data-msg-reqired="please confirm your password"/>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="photo">Upload your Photo</label>
+                    <input type="file" name="photo" id="photo" class="form-control" required data-msg-required="Photo is required">
+                </div>
+                <div class="col-md-6 ">
+                    <label for="address">Enter Address</label>
+                    <textarea name="description" id="address" class="form-control"></textarea>
+                </div>
+                <!--<div class="col-md-6 ">
+                    <label for="address">Enter Address</label>
+                    <textarea name="description" id="address" class="form-control"/></textarea>
+                </div>-->
+                <div class="col-md-6 ">
+                    <label for="city">Enter City</label>
+                    <input type="city" name="city" id="city" class="form-control" required data-msg-required="City is required">
+                </div>
+                <div class="col-md-6 ">
+                    <label for="state">Enter State </label>
+                    <input type="state" name="state" id="state" class="form-control" required data-msg-required="State is required">
+                </div>
+
+                <div class="col-md-6 ">
+                    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" onclick="usersignup()" class="btn btn-primary btn-lg form -control"> CREATE ACCOUNT
+                    </button>
+                </div>
+                <div id="output"></div>
+            </div>
+
+
+        </form>
+        <br>
+    </div>
+
+    <!--<script src="/dist/jquery-3.6.3.js"></script>
+    <script src="/dist/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#form").validate();
+        })
+    </script>-->
+    <%- include("footer")%>
+</div>
+
+<script>
+    let usersignup=()=> {
+        //  $("usersignupform").validate();
+        //alert();
+        //  if ($("usersignupform").valid()) {
+        let formControls = document.getElementById("usersignupform").elements;
+
+        let formData = new FormData();
+        for(let i = 0; i < formControls.length; i++) {
+            if(formControls[i].type !== "button") {
+                if(formControls[i].type === "radio") {
+                    if(formControls[i].checked) {
+                        formData.append(formControls[i].name, formControls[i].value);
+                    }
+                } else if(formControls[i].type === "file") {
+                    formData.append(formControls[i].id, formControls[i].files[0]);
+                } else {
+                    formData.append(formControls[i].id, formControls[i].value);
+                }
+            }
+        }
+
+        // console.log(user_name, full_name, password, phone, email, admin_type);
+
+
+        let http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.response == "inserted") {
+                    console.log(this.response);
+                    document.getElementById("usersignupform").reset();
+                    document.getElementById("output").innerHTML = "Your account is created successfully"
+                }
+            }
+        }
+        //http.open("get", "/admin/add-adminaction?Username="+user_name+"&pass="+password+"&fname="+full_name+"&phone="+phone+ "&email="+email+"&admin="+admin_type,true);
+        http.open("post", "/user/adduser", true);
+        http.send(formData);
+
+        // }
+    }
+
+</script>
+
+</body>
+</html>

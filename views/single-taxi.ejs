@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%-include("header")%>
+</head>
+<body>
+<%-include("navbar")%>
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Our Taxis</span></li>
+        </ul><!-- /.thm-breadcrumb -->
+        <h2>"<%= car.carname %>"</h2>
+    </div><!-- /.container -->
+</section><!-- /.inner-banner -->
+
+<section class="single-taxi-details-one">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="image-block">
+                    <img src="<%= car.photo %>" alt="Awesome Image"/>
+                    <!--                    <div class="icon-block">-->
+                    <!--                        <i class="conexi-icon-mercedes-benz"></i>-->
+                    <!--                    </div>-->
+                    <!-- /.icon-block -->
+                </div><!-- /.image-block -->
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-6">
+                <div class="content-block">
+                    <div class="block-title">
+                        <div class="dot-line"></div><!-- /.dot-line -->
+                        <p>Corporate taxi service</p>
+                        <h2><%= car.carname %></h2>
+                    </div><!-- /.block-title -->
+                    <p><%= car.description %></p>
+                    <hr class="style-one" />
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <ul class="features-list">
+
+                                <li>
+                                    <span class="name-line">Model:</span>
+                                    <span class="price-line"><%= car.model %></span>
+                                </li>
+                                <li>
+                                    <span class="name-line">Color:</span>
+                                    <span class="price-line"><%= car.color %></span>
+                                </li>
+                                <li>
+                                    <span class="name-line">Brand:</span>
+                                    <span class="price-line"><%= car.brand %></span>
+                                </li>
+                                <li>
+                                    <span class="name-line">Rent:</span>
+                                    <span class="price-line">&#8377;<%= car.rent %></span>
+                                </li>
+                                <li>
+                                    <span class="name-line">Type:</span>
+                                    <span class="price-line"><%= car.type %></span>
+                                </li>
+                                <li>
+                                    <span class="name-line">Registation No:</span>
+                                    <span class="price-line"><%= car.reg_no %></span>
+                                </li>
+                                <li>
+                                    <span class="name-line">Insurance Validity:</span>
+                                    <span class="price-line"><%= car.insurance_validity %></span>
+                                </li>
+                                <li><a href="/user/select-taxi" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;">  Book Now </a></li>
+
+                            </ul>
+                            <!-- /.feature-list -->
+                        </div><!-- /.col-lg-7 -->
+                    </div><!-- /.row -->
+
+                </div><!-- /.content-block -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.single-taxi-details-one -->
+
+<section class="single-taxi-faq-one thm-gray-bg">
+    <div class="container">
+        <div class="block-title text-center">
+            <div class="dot-line"></div><!-- /.dot-line -->
+            <p>Our faqs</p>
+            <h2>Questions & answers</h2>
+        </div><!-- /.block-title -->
+        <div class="accrodion-grp" data-grp-name="faq-accrodion">
+            <div class="accrodion active">
+                <div class="accrodion-title">
+                    <h4>Can i make advance payment to book taxi?</h4>
+                </div>
+                <div class="accrodion-content">
+                    <div class="inner">
+                        <p>Thanks for your query.Here the answer is its bascially depends upon the customer if they wish too.Then we take 10% advance as a security</p>
+                    </div><!-- /.inner -->
+                </div>
+            </div>
+            <div class="accrodion ">
+                <div class="accrodion-title">
+                    <h4>How much luxury taxi rates per minute?</h4>
+                </div>
+                <div class="accrodion-content">
+                    <div class="inner">
+                        <p>It's between 100-300.Happy to help..For any other query please contact through email or the number above..</p>
+                    </div><!-- /.inner -->
+                </div>
+            </div>
+            <div class="accrodion">
+                <div class="accrodion-title">
+                    <h4>Is there any surcharge for mercedez benz?</h4>
+                </div>
+                <div class="accrodion-content">
+                    <div class="inner">
+                        <p>No,Surcharges for any type of taxi.</p>
+                    </div><!-- /.inner -->
+                </div>
+            </div>
+            <div class="accrodion">
+                <div class="accrodion-title">
+                    <h4>How much you charge for one hour wait?</h4>
+                </div>
+                <div class="accrodion-content">
+                    <div class="inner">
+                        <p>So,It's bascially depends upon the type of car you are hiring for your trip..</p>
+                    </div><!-- /.inner -->
+                </div>
+            </div>
+        </div>
+    </div><!-- /.container -->
+</section><!-- /.single-taxi-faq-one -->
+
+
+<% if(similarCars.length > 0) { %>
+    <section class="taxi-style-one">
+        <div class="container">
+            <div class="block-title text-center">
+                <div class="dot-line"></div><!-- /.dot-line -->
+                <p>Our best cars</p>
+                <h2>Similar taxis</h2>
+            </div><!-- /.block-title -->
+            <div class="row">
+                <% similarCars.forEach(car => { %>
+                <div class="col-lg-4">
+                    <div class="single-taxi-one">
+                        <div class="inner-content">
+                            <img src="<%=car.photo%>"style="width: 221px; height: 180px" alt="Awesome Image" />
+
+                            <h3><%= car.name %></h3>
+                            <ul class="feature-list">
+                                <li>
+                                    <span class="name-line">Model:</span>
+                                    <span class="price-line"><%=car.model%></span>
+                                </li>
+                            </ul><!-- /.feature-list -->
+
+                            <a href="/single-taxi/<%= car.id %>" class="book-taxi-btn">View Details</a>
+                        </div><!-- /.inner-content -->
+                    </div><!-- /.single-taxi-one -->
+                </div>
+                <% }) %>
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.taxi-style-one -->
+<% } %>
+
+<section class="cta-style-one text-center">
+    <div class="container">
+        <p>Call 24 hour service available</p>
+        <h3>Call now and book <br> our taxi for your next ride</h3>
+        <a href="/taxi" class="cta-btn">Choose Your Taxi</a>
+    </div><!-- /.container -->
+</section><!-- /.cta-style-one -->
+<%-include("footer")%>
+</body>
+</html>

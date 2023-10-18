@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--    <meta name="viewport"-->
+    <!--          content="width=device-width,user-scalable=no,initial-scaler=1.0,maximum-scale=1.0,minimum-scale=1.0">-->
+    <meta http-equiv="X-UA-compatible" content="ie=edge">
+    <title> View Drivers</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%- // include("headerfiles")  %>
+    <%- include("header") %>
+
+</head>
+<body onload="viewdrivers()">
+<%- include("adminheader") %>
+<%- //include("driversheader") %>
+
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><a href="/admin/driverslogin">Login</a></li>
+            <li><span class="page-title"></span></li>
+        </ul>
+        <h2>Drivers Signup</h2>
+    </div>
+</section>
+
+<div class="container">
+    <br>
+    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal"> Add Drivers
+    </button>
+    <h1> Driver Details </h1>
+    <div id="output"></div>
+</div>
+
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Add New Driver</h5>
+                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn-close" data-bs-dismiss="modal" arial-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+                <form id="form">
+                    <div class="row">
+                        <div class="col-md-6 mt-2">
+                            <label for="driver"> Driver Name:</label>
+                            <input type="text" name="driver" id="driver" class="form-control" required
+                                   data-msg-required="Driver Name is Required"/>
+
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="phone">Contact Details:</label>
+                            <input type="tel" name="phone" id="phone" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="username">  Username :</label>
+                            <input type="text" name="username" id="username" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="Email">  Email :</label>
+                            <input type="email" name="emailid" id="email" class="form-control" required/>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <label for="password">Password:</label>
+                            <input type="text" name="password" id="password" minlength="6" maxlength="15" class="form-control" required data-msg-required="password is required "/>
+                        </div>
+                        <div class="col-md-6 ">
+                            <label for="photo"> Photo of Driver: </label>
+                            <input type="file" name="photo" id="photo" class="form-control"/>
+
+                        </div>
+                        <div class="col-md-6 mt-2">
+
+                            <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  onclick="drivers()" class="btn btn-primary btn-lg">Submit</button>
+                        </div>
+                        <div id="output"></div>
+
+                    </div>
+
+                </form>
+                <div id="response"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("footer") %>
+<script>
+    let drivers = () => {
+        $("form").validate();
+        if ($("form").valid()) {
+            /*var driver_name = document.getElementById("driver").value;
+            var contact_details = document.getElementById("phone").value;
+            var username = document.getElementById("username").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var photo = document.getElementById("photo").files[0];
+            */
+            var elements = document.getElementById("form").elements;
+            var formdata = new FormData();
+            for (let i = 0; i < elements.length; i++) {
+                if (elements[i].type != "button") {
+                    if (elements[i].type == "file")
+                        formdata.append(elements[i].name, elements[i].files[0]);
+                    formdata.append(elements[i].name, elements[i].value);
+                }
+            }
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.response)
+                    if (this.response == "inserted") {
+                        document.getElementById("form").reset();
+                        document.getElementById("response").innerHTML = "driver added successfully";
+                    } else {
+                        alert("Driver Already Exist");
+                    }
+                }
+            }
+            http.open("post", "/admin/driversaction", true);
+            http.send(formdata);
+        }
+    }
+
+    function viewdrivers() {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                // console.log(this.response);
+                let output = '<div class="table-responsive"><table class="table">' +
+                    '<tr> <th> Sr.No.</th><th>Driver Name</th><th> Contact Details</th><th> Username</th><th>Email</th><th>Photo</th></tr>';
+                if (this.response != "no data found") {
+                    let srno = 1;
+                    let data = JSON.parse(this.response);
+                    for (let i = 0; i < data.length; i++) {
+                        output += '<tr>' +
+                            '<td>' + (i + 1) + '</td>' +
+                            '<td>' + data[i].driver + '</td>' +
+                            '<td>' + data[i].phone + '</td>' +
+                            '<td>' + data[i].username + '</td>' +
+                            '<td>' + data[i].email + '</td>' +
+
+                            '<td><img src="' + data[i].photo + '" alt= "" style="height:100px"/></td>' +
+
+                            '<tr>'
+                        srno++;
+                    }
+                }
+                output += '</table></div>';
+                document.getElementById("output").innerHTML = output;
+            }
+        }
+        http.open("get", "/admin/viewdriversaction", true);
+        http.send();
+    }
+
+    let city = () => {
+        $("#driversform").validate;
+        if ($("#driversform").valid()) {
+            var driver = document.getElementById("driver").value;
+            var phone = document.getElementById("phone").value;
+            var Username = document.getElementById("Username").value;
+            var email = document.getElementById("Email").value;
+            var password = document.getElementById("password").value;
+            var photo = document.getElementById("photo").files[0];
+            let formData = new FormData();
+            formData.append("driver", driver);
+            formData.append("phone", phone);
+            formData.append("Username", Username);
+            formData.append("email", email);
+            formData.append("password", password);
+            formData.append("photo", photo);
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.response == "inserted") {
+                        document.getElementById("driversform").reset();
+                        document.getElementById("output1").innerHTML = "driver added successfully";
+                    }
+                }
+            }
+            http.open("post", "/admin/driversaction", true);
+            http.send(formData);
+
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

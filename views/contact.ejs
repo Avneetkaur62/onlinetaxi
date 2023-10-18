@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%-include("header")%>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <%-include("navbar")%>
+    <section class="inner-banner">
+        <div class="container">
+            <ul class="thm-breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><span class="sep">.</span></li>
+                <li><span class="page-title">Contact</span></li>
+            </ul><!-- /.thm-breadcrumb -->
+            <h2>Contact</h2>
+        </div><!-- /.container -->
+    </section><!-- /.inner-banner -->
+
+    <div class="contact-page-map-wrapper">
+        <!--        <div class="google-map" id="contact-google-map" data-map-lat="40.712784" data-map-lng="-74.005941"-->
+        <!--             data-icon-path="images/resources/map-pin-1-1.png" data-map-title="Brooklyn, New York, United Kingdom"-->
+        <!--             data-map-zoom="11" data-markers='{-->
+        <!--                        "marker-1": [40.712784, -74.005941, "<h4>Main Office</h4><p>Babylon Branch , Lindenhurst, UK</p>"],-->
+        <!--                        "marker-2": [40.728157, -74.077642, "<h4>Branch Office</h4> <p>291 Park Ave S, East Meadow, UK</p>"]-->
+        <!--                    }'>-->
+        <!--        </div>-->
+
+        <div class="google-map" id="contact-google-map">
+            <iframe src=//www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3423.7476131982403!2d75.81482157571797!3d30.893720677834178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a836068210cf1%3A0xc9d8fb19bedc04c3!2sGuru%20Nanak%20Dev%20University%20Amritsar!5e0!3m2!1sen!2sin!4v1684133442443!5m2!1sen!2sin"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="contact-info-block">
+            <p>GNDU <br> Amritsar</p>
+            <ul class="contact-infos">
+                <li><i class="fa fa-envelope"></i> avneetrandhawa007@gmail.com</li>
+                <li><i class="fa fa-phone-square"></i> 8511900004</li>
+            </ul><!-- /.contact-infos -->
+        </div><!-- /.contact-info-block -->
+    </div><!-- /.contact-page-map-wrapper -->
+    <section class="contact-form-style-one">
+        <div class="container">
+            <div class="block-title text-center">
+                <div class="dot-line"></div><!-- /.dot-line -->
+                <p>Contact with us now</p>
+                <h2>Leave a message</h2>
+            </div><!-- /.block-title -->
+            <form id="contactForm" >
+                <div class="col-lg-6">
+                    <div class="input-holder">
+                        <input class="form-control" type="text" name="form_name" id="name" placeholder="Your name">
+                    </div><!-- /.input-holder -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-6">
+                    <div class="input-holder">
+                        <input class="form-control" type="email" name="form_email" id="email" placeholder="Email address">
+                    </div><!-- /.input-holder -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-6">
+                    <div class="input-holder">
+                        <input class="form-control" type="text" name="form_phone" id="phone"placeholder="Phone">
+                    </div><!-- /.input-holder -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-6">
+                    <div class="input-holder">
+                        <input class="form-control" type="text" name="form_subject" id="subject" placeholder="Subject">
+                    </div><!-- /.input-holder -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-12">
+                    <div class="input-holder">
+                        <textarea class="form-control" name="form_message" id="message" placeholder="Write message"></textarea>
+                    </div><!-- /.input-holder -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-12">
+                    <div class="input-holder text-center">
+                        <input id="form_botcheck" name="form_botcheck" class="form-control" type="hidden" value="">
+                        <button class="theme-btn btn-style-two"style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" onclick="contactus()" type="button" data-loading-text="Please wait..."><span>Send Message</span>
+                        </button>
+                    </div><!-- /.input-holder -->
+                </div>
+                <p id="output" class="form-message"></p><!-- /.col-lg-6 -->
+            </form>
+            <!-- /.contact-form-one -->
+        </div><!-- /.container -->
+    </section><!-- /.contact-form-style-one -->
+    <%- include("footer") %>
+
+    <script>
+        let contactus = () => {
+            $("#contactForm").validate();
+            if ($("#contactForm").valid()) {
+                var name = document.getElementById("name").value;
+                var email  = document.getElementById("email").value;
+                var subject = document.getElementById("subject").value;
+                var message = document.getElementById("message").value;
+                var phone = document.getElementById("phone").value;
+
+                var http = new XMLHttpRequest();
+                http.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        // alert(this.responseText);
+                        if (this.responseText === "message delivered") {
+                            document.getElementById("contactForm").reset();
+                            // alert("working");
+                            document.getElementById("output").innerHTML = "Message delivered successfully";
+                        }
+                    }
+                }
+                http.open("get", "/contactusaction?name=" + name + "&email=" + email + "&subject=" + subject + "&message=" + message + "&phone=" + phone , true);
+                http.send();
+            }
+        }
+
+    </script>
+
+
+</div>
+
+</body>
+</html>

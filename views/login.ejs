@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <%- // include('headerfiles')  %>
+    <%- include("header") %>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+    <%- //include("publicheader.ejs")  %>
+    <%- //include("adminheader") %>
+    <section class="inner-banner">
+        <div class="container">
+            <ul class="thm-breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><span class="sep">.</span></li>
+                <li><span class="page-title">HOME</span></li>
+            </ul>
+            <h2> Admin Login</h2>
+        </div>
+    </section>
+    <div class="container mt-3">
+        <h1></h1>
+        <div class="container">
+            <form id="loginForm">
+                <div class="mb-2">
+                    <label for="username" class="form-label"> Username : </label>
+                    <input type="text" name="username" id="username" class="form-control" required
+                           data-msg-required="Username is required"/>
+                </div>
+                <div class="mb-2">
+                    <label for="pass" class="form-label"> Password: </label>
+                    <input type="password" name="pass" id="pass" class="form-control" minlength="6" maxlength="15" required
+                           data-msg-required="Password is required"/>
+                </div>
+                <div class="mb-2">
+                    <button class="btn btn-primary" id="btn" type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  onclick="login()">LOGIN</button>
+                    <div id="output"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <%- include("footer") %>
+</div>
+<script>
+    function login() {
+        // alert();
+        $("#loginForm").validate();
+        if ($("#loginForm").valid()) {
+            var username = document.getElementById("username").value;
+            var pass = document.getElementById("pass").value;
+            console.log(username + " " + pass);
+            let data = new FormData();
+            data.append("username", username);
+            data.append("pass", pass);
+            let http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.response == "success") {
+                        document.getElementById("loginForm").reset();
+                        document.getElementById("output").innerHTML = "<div class='alert alert-success'>Login successful </div>"
+                        document.location.href = "/admin/adminhome";
+                    } else {
+                        document.getElementById("loginForm").reset();
+                        document.getElementById("output").innerHTML = "<div class='alert alert-danger'>invalid username or password. Try again later</div>"
+                    }
+                }
+            }
+            http.open("post", "/loginaction", true);
+            http.send(data);
+        } else {
+            document.getElementById("btn").value = "Loading....";
+        }
+    }
+</script>
+
+</body>
+</html>
+

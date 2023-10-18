@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <%- //include("headerfiles")           %>
+    <%- include("header") %>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .error {
+            color: red
+        }
+    </style>
+</head>
+<body onload="getdata1();">
+
+<%- include("userheader") %>
+
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title"> for user </span></li>
+        </ul><!-- /.thm-breadcrumb -->
+        <h2> Taxi Booking Page</h2>
+    </div><!-- /.container -->
+</section>
+
+<div class="container py-5">
+    <h1>Book A Ride </h1>
+    <hr>
+    <div class="mb-5"></div>
+    <!--    <form id="form">-->
+
+    <h4 class="text-warning">Car Info.</h4>
+    <div class="row">
+        <div class="col-3">
+            <img src="<%= car.photo %>" style="height:150px" alt="">
+        </div>
+        <div class="col-lg-9">
+            <p><%= car.carname %> (<%= car.model %>)</p>
+            <p><%= car.description %></p>
+            <b>Rent: &#x20b9;<%= car.rent %></b>
+        </div>
+    </div>
+    <hr>
+    <div id="output"></div>
+
+
+    <div class="mb-5"></div>
+    <h4 class="text-warning">Booking Details</h4>
+    <form id="bookingform">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="hidden" id="car_id" value="<%= car.id %>">
+                <label for="Name"> Fullname: </label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Mark" required
+                       data-msg-required="Fullname is required" value="<%= user.firstname +" "+ user.lastName %>"/>
+            </div>
+
+            <div class="col-4">
+                <label for="Phone Number"> Phone Number: </label>
+                <input type="tel" name="phone" id="phone" class="form-control" placeholder="Enter Phone Number"
+                       required
+                       data-msg-required="Number is required" value="<%= user.phone %>"/>
+            </div>
+
+            <div class="col-4">
+                <label for="Email"> Email: </label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Write Your Email "
+                       required readonly
+                       data-msg-required="Email is required" value="<%= user.email %>"/>
+            </div>
+
+            <div class="col-md-4 mt-2">
+                <label for="city">City:</label>
+                <div id="cityDiv"></div>
+            </div>
+
+            <div class="col-md-4 mt-2">
+                <label for="pickup">Pick Up Location:</label>
+                <select disabled name="pickup" id="pickup" class="form-control" required
+                        data-msg-required="Pickup Location Is Required"> </select>
+            </div>
+
+            <div class="col-md-4 mt-2">
+                <label for="dropoff"> Drop Off Location: </label>
+                <select disabled name="dropoff" id="dropoff" class="form-control" required
+                        data-msg-required="Dropoff Location Is Required"> </select>
+            </div>
+
+            <div class="col-md-4 mt-2">
+                <label for="Pick Up Date">Pick Up Date:</label>
+                <input type="date" name="Pick Date" id="PickDate" class="form-control" placeholder="Pick Up Date"
+                       value="Date" required data-msg-required="Date is required"/>
+            </div>
+
+            <div class="col-md-4 mt-2">
+                <label for="Pick Up Time">Pick Up Time(Approx.):</label>
+                <input type="time" name="Pick Time" id="PickTime" class="form-control" required
+                       data-msg-required="Pick Up Time is required"/>
+            </div>
+
+            <!--            <div class="col-md-4 mt-2">-->
+            <input type="hidden" id="Price" name="Price" class="form-control" required value="<%= car.rent %>"/>
+            <!--            </div>-->
+
+            <div class="col-md-4 mt-2">
+                <label for="payment"> Select Payment Option: </label>
+                <div>
+                    <select name="payment" id="PaymentType" class="form-select" style="width: 100%">
+                        <option value="online">Online</option>
+                        <option value="offline ">Offline</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-12 ">
+                <label for="Message"> Enter Message: </label>
+                <textarea name="Message" id="Message" class="form-control" required></textarea>
+            </div>
+
+            <div class="col-md-12 mt-2 text-center">
+                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" onclick="checkPayment()" class="btn btn-primary mb-3 w-100" id="btn">
+                    Book A Ride
+                </button>
+
+            </div>
+            <!--                </center>-->
+        </div>
+    </form>
+</div>
+
+
+<script src="/javascripts/checkout.js"></script>
+<script>
+    // city
+    function getdata1() {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                let data = JSON.parse(this.response);
+                // console.log(data)
+                let html = `<select required onchange="getArea(this.value)" id="city" name="city" class="form-select"><option value=""> Please Select City</option>`;
+                for (let i = 0; i < data.length; i++) {
+                    html += `<option value="${data[i].cityid}">${data[i].cityname}</option>`;
+                }
+                html += `</select>`;
+                document.getElementById("cityDiv").innerHTML = html;
+            }
+        }
+        http.open("get", "/user/viewcity", true);
+        http.send();
+    }
+
+    // taxi
+    function getdata2() {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let data = JSON.parse(this.response);
+                console.log(data)
+                let html = `<select id="taxi" name="taxi" class="form-select"  data-rule-required="true"><option value=""> Please Select Taxi</option>`;
+                for (let i = 0; i < data.length; i++) {
+                    html += `<option value="${data[i].type}">${data[i].type}</option>`;
+                }
+                html += `</select>`;
+                document.getElementById("taxiDiv").innerHTML = html;
+            }
+        }
+        http.open("get", "/user/viewcars", true);
+        http.send();
+    }
+
+    // area
+    const getArea = (cityid) => {
+        // alert(cityid);
+        if (cityid === "") {
+            alert("please select city");
+            document.getElementById("pickup").innerHTML = '';
+            document.getElementById("dropoff").innerHTML = '';
+            document.getElementById("pickup").disabled = true;
+            document.getElementById("dropoff").disabled = true;
+            return false;
+        }
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let data = JSON.parse(this.response);
+                console.log(data);
+                let html = `<option value=""> Please Select Location</option>`;
+                for (let i = 0; i < data.length; i++) {
+                    html += `<option value="${data[i].areaname}">${data[i].areaname}</option>`
+                }
+                document.getElementById("pickup").innerHTML = html;
+                document.getElementById("dropoff").innerHTML = html;
+                document.getElementById("pickup").disabled = false;
+                document.getElementById("dropoff").disabled = false;
+            }
+        };
+        http.open("get", "/user/fetch-areas?cityid=" + cityid, true);
+        http.send();
+    }
+
+    function getdata() {
+        getdata1();
+        // getdata2();
+    }
+
+    const checkPayment = () => {
+        $("#bookingform").validate();
+        if ($("#bookingform").valid()) {
+            if (pickup === dropoff) {
+                alert("pickup and dropoff cannot be same");
+                return false;
+            }
+
+            let payment = document.getElementById("PaymentType").value;
+
+            if (payment === "online") {
+                onlinePayment();
+            } else {
+                bookRide('cod');
+            }
+        }
+    }
+
+    const onlinePayment = () => {
+        let amount = document.getElementById("Price").value;
+        // console.log(amount);
+
+        let options = {
+            key: "rzp_test_dRWiKHS7zr2Gki",
+            amount: amount * 100,
+            name: "Online Taxi Booking",
+            description: "Payment Gateway",
+            image: "",
+            handler: function (response) {
+                bookRide(response.razorpay_payment_id);
+            },
+            prefill: {
+                name: "",
+                email: "",
+            },
+            notes: {
+                address: "",
+            },
+            theme: {
+                color: "#942436",
+            },
+        };
+
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+    let bookRide = (mode) => {
+        if (mode === "") {
+            alert("Payment failed")
+            return false
+        }
+
+        $("#bookingform").validate();
+        if ($("#bookingform").valid()) {
+            let name = document.getElementById("name").value;
+            let phone = document.getElementById("phone").value;
+            let email = document.getElementById("email").value;
+            let city = document.getElementById("city").value;
+            let pickup = document.getElementById("pickup").value;
+            let dropoff = document.getElementById("dropoff").value;
+            let date = document.getElementById("PickDate").value;
+            let time = document.getElementById("PickTime").value;
+            let price = document.getElementById("Price").value;
+            let payment = document.getElementById("PaymentType").value;
+            let message = document.getElementById("Message").value;
+            let car_id = document.getElementById("car_id").value;
+
+            if (pickup === dropoff) {
+                alert("pickup and dropoff cannot be same");
+                return false;
+            }
+
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    console.log(this.response);
+                    if (this.response === "inserted") {
+                        window.location.href = "/user/my-bookings";
+                    } else if (this.response === "userlogin") {
+                        window.location.href = "/userlogin";
+                    }
+                }
+            }
+            http.open("get", "/user/bookingaction?name=" + name + "&email=" + email + "&phone=" + phone + "&city=" + city + "&pickup=" + pickup + "&dropoff=" + dropoff + "&date=" + date + "&time=" + time + "&price=" + price + "&payment=" + payment + "&message=" + message + "&car_id=" + car_id, true);
+            http.send();
+        }
+    }
+</script>
+
+<%- include("footer") %>
+</body>
+</html>

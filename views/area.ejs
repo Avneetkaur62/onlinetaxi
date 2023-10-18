@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Cars</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%- //include('headerfiles') %>
+    <%- include("header") %>
+
+</head>
+<body onload="getdata1()">
+<%- include('adminheader') %>
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Area Details</span></li>
+        </ul>
+        <h2>Area</h2>
+    </div>
+</section>
+<div class="container">
+
+
+    <!-- Button trigger modal -->
+    <br>
+    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addareaModal">
+        Add Area
+    </button>
+    <br>
+    <h1> Areas Available </h1>
+    <div id="output"></div>
+
+
+    <!--  add car Modal -->
+    <div class="modal fade" id="addareaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Area</h5>
+                    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="areaform">
+                        <div class="row">
+
+                            <div class="col-md-6 ">
+                                <label for="cityname"> City : </label>
+                                <select id="cityname" class="form-select"></select>
+
+                            </div>
+
+                            <div class="col-md-6 ">
+                                <label for="areaname">  Area: </label>
+                                <input type="text" name="areaname" id="areaname" class="form-control" required
+                                       data-msg-required="Area Name is required"/>
+
+                            </div>
+                            <div class="col-md-6 ">
+                                <label for="photo">  Photo of the area: </label>
+                                <input type="file" name="photo" id="photo" class="form-control"/>
+
+                            </div>
+
+
+                            <div class="col-md-6 mt-2">
+                                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  onclick="area()" class="btn btn-primary btn-lg"> SUBMIT
+                                </button>
+                            </div>
+                            <div id="output1"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<%-include("footer")%>
+<script>
+    function getdata() {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let data = JSON.parse(this.response);
+                console.log(data)
+                let html = "<option> Please Select City</option>";
+                for (let i = 0; i < data.length; i++) {
+                    html += "<option value=" + data[i].cityid + ">" + data[i].cityname + "</option>";
+                }
+                document.getElementById("cityname").innerHTML = html;
+            }
+        }
+        http.open("get", "/admin/viewcities", true);
+        http.send();
+    }
+
+
+    function viewarea() {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let output = '<table class="table">' +
+                    '<tr> <th>Area id </th> <th> Area name</th> <th> City </th> <th> Photo </th>  </tr>';
+                if (this.response != "no data found") {
+                    let data = JSON.parse(this.response);
+                    console.log(data);
+                    for (let i = 0; i < data.length; i++) {
+                        output += '<tr>' +
+                            '<td>' + data[i].areaid + '</td>' +
+                            '<td>' + data[i].areaname + '</td>' +
+                            '<td>' + data[i].cityname + '</td>' +
+                            '<td><img src="' + data[i].areaphoto + '" alt= "" style="height:100px"/></td>' +
+
+                            '</tr>';
+                    }
+                }
+                output += '</table>';
+                document.getElementById("output").innerHTML = output;
+
+            }
+        }
+        http.open("get", "/admin/viewarea", true);
+        http.send();
+    }
+
+    function getdata1() {
+        getdata();
+        viewarea();
+    }
+
+
+    let area = () => {
+        $("#areaform").validate;
+        if ($("#areaform").valid()) {
+            var areaname = document.getElementById("areaname").value;
+
+            var photo = document.getElementById("photo").files[0];
+
+            var cityname = document.getElementById("cityname").value;
+
+            let formData = new FormData();
+            formData.append("areaname", areaname);
+
+            formData.append("photo", photo);
+
+            formData.append("cityname", cityname);
+
+
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.response == "inserted") {
+                        document.getElementById("areaform").reset();
+                        document.getElementById("output1").innerHTML = "Area added successfully";
+                    }
+                }
+            }
+            http.open("post", "/admin/areaaction", true);
+            http.send(formData);
+
+        }
+    }
+</script>
+
+</body>
+</html>

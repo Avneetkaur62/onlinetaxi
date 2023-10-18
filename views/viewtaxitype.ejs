@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title> View Taxi Type</title>
+    <%-// include('headerfiles') %>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%-include("header")%>
+</head>
+<body onload="viewtaxitype()">
+<%- include("adminheader.ejs") %>
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">View Taxi Details</span></li>
+        </ul>
+        <h2>Show Details</h2>
+    </div>
+</section>
+<div class="container" mt-3>
+    <h1>Taxi Type Details</h1>
+    <div id="output"></div>
+</div>
+<%-include("footer")%>
+<script>
+    function viewtaxitype() {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // console.log(this.response);
+                let output = '<table class="table">' +
+                    '<tr> <th> Sr.No. </th> <th> Taxi Type </th> </tr>';
+                if (this.response != "no data found ") {
+                    let srno = 1;
+                    let data = JSON.parse(this.response);
+                    for (let i = 0; i < data.length; i++) {
+                        output += '<tr>' +
+                            '<td>' + srno + '</td>' +
+                            '<td>' + data[i].type + '</td>' +
+                            '</tr>';
+                        srno++;
+                    }
+                }
+                output += '</table>';
+                document.getElementById("output").innerHTML = output;
+            }
+
+        }
+        http.open("get", "/admin/gettaxitypedata",true);
+        http.send();
+    }
+</script>
+
+</body>
+</html>

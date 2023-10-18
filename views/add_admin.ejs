@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> SignUp </title>
+    <link href="/css/bootstrap.css" rel="stylesheet"/>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%- //include("headerfiles") %>
+    <%- include("header") %>
+</head>
+
+<body>
+<%-include("adminheader")%>
+<%-// include("navbar") %>
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/admin/add-admin"> Sign Up</a></li>
+            <li><span class="sep">.</span></li>
+            <li><a href="/login"> Login</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Sign Up</span></li>
+        </ul>
+        <h2>Sign Up</h2>
+    </div>
+</section>
+<div class="container">
+    <h1> Add Admin </h1>
+    <form id="form" action="/add-adminaction" method="post">
+        <div class="row">
+            <div class="col-md-6 mt-2">
+                <label for="username">Username: </label>
+                <input type="text"  id="username" name="username" class="form-control" required
+                       data-msg-required="Username is required"/>
+            </div>
+            <div class="col-md-6 mt-2">
+                <label for="password">  Password: </label>
+                <input type="password"  id="pass" name="password" minlength="6" maxlength="15"  class="form-control" required
+                       data-msg-required="password is required "/>
+            </div>
+            <div class="col-md-6 mt-2">
+                <label for="cpass">Confirm Password:</label>
+                <input type="password" name="cpass" id="cpass" class="form-control" data-rule-required="true"
+                       data-rule-equalto="#pass"/>
+            </div>
+            <div class="col-md-6 mt-2">
+                <label for="name">  Full Name: </label>
+                <input type="text"  id="fname"  name="fname" class="form-control" data-rule-required="true"/>
+            </div>
+            <div class="col-md-6 mt-2">
+                <label for="phone"> Phone No. :</label>
+                <input type="tel" name="phone" id="phone" class="form-control"/>
+            </div>
+            <div class="col-md-6 mt-2">
+                <label for="email"> Email: </label>
+                <input type="email"  id="email" name="email" class="form-control" required data-msg-required="Email is required"/>
+            </div>
+            <div class="col-md-6 mt-2">
+                <label for="admin"> Select Admin type:</label>
+                <select name="admin" id="admin" class="form-select">
+                    <option selected> select admin type here</option>
+                    <option value="admin">Admin</option>
+                    <option value="subadmin">Sub Admin</option>
+                </select>
+
+            </div>
+            <div class="col-md-6 mt-2">
+                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  onclick="signup()" class="btn btn-primary btn-lg form -control"> SUBMIT
+                </button>
+                <div id="output"></div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<br>
+<!--<script src="/dist/jquery-3.6.3.js"></script>
+<script src="/dist/jquery.validate.js"></script>-->
+<%-include("footer")%>
+<script>
+    let signup=()=>{
+        $("form").validate();
+        if($("form").valid()){
+            var user_name=document.getElementById("username").value;
+            var full_name=document.getElementById("fname").value;
+            var password=document.getElementById("pass").value;
+            var phone=document.getElementById("phone").value;
+            var email=document.getElementById("email").value;
+            var admin_type=document.getElementById("admin").value;
+            var http=new XMLHttpRequest();
+            http.onreadystatechange=function(){
+                if(this.readyState==4 && this.status==200){
+                    if(this.response=="inserted"){
+                        document.getElementById("form").reset();
+                        document.getElementById("output").innerHTML="admin added successfully";
+
+                    }
+                }
+            }
+            http.open("get","add_adminaction?username="+user_name+"&pass="+password+"&fname="+full_name+"&phone="+phone+"&email="+email+"&admin="+admin_type,true);
+            http.send();
+        }
+    }
+
+</script>
+
+</body>
+</html>

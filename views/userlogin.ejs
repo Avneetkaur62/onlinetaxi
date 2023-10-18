@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <%- //include('headerfiles') %>
+    <%-include("header")%>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<%- //include("publicheader.ejs") %>
+<%- //include('userheader') %>
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">  Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">USER LOGIN</span></li>
+            <li><span class="sep">.</span></li>
+            <li><a href="/user/adduser">  Signup</a></li>
+        </ul>
+        <h2>User Login</h2>
+    </div>
+</section>
+
+<div class="container mt-3">
+    <h1> User Login</h1>
+    <div class="container">
+        <form id="loginForm">
+            <div class="mb-2">
+                <label for="email" class="form-label"> Email ID : </label>
+                <input type="text" name="email" id="email" class="form-control" required
+                       data-msg-required="Email is required"/>
+            </div>
+            <div class="mb-2">
+                <label for="pass" class="form-label">Enter Password: </label>
+                <input type="password" name="pass" id="pass" class="form-control" minlength="6" maxlength="15" required
+                       data-msg-required="Password is required"/>
+            </div>
+            <a href="/user/forgotpassword" style="    display: inline-block;
+    vertical-align: middle;
+    color: black;
+    font-size: 12px;
+    font-weight: 500;
+    background-color: #ffbe07;
+    border-radius: 55px;
+    border-color: black;
+    padding: 1px 7px;
+    transition: all .4s ease;
+    margin-top: 30px;">Forgot Password</a>
+            <br>
+            <div class="mb-2">
+                <button class="btn btn-primary" id="btn" type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  onclick="login()">LOGIN</button>
+                <div id="output"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%-include("footer")%>
+
+<script>
+    function login() {
+        // alert();
+        $("#loginForm").validate();
+        if ($("#loginForm").valid()) {
+            var email = document.getElementById("email").value;
+            var pass = document.getElementById("pass").value;
+            // console.log(username + " " + pass);
+            let data = new FormData();
+            data.append("email", email);
+            data.append("pass", pass);
+            let http = new XMLHttpRequest();
+            http.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    alert(this.response);
+                    if (this.response === "success") {
+                        document.getElementById("loginForm").reset();
+                        document.getElementById("output").innerHTML = "<div class='alert alert-success'>Login successful </div>"
+                        document.location.href = "/user/userhome";
+                    } else {
+                        document.getElementById("loginForm").reset();
+                        document.getElementById("output").innerHTML = "<div class='alert alert-danger'>invalid username or password. Try again later</div>"
+                    }
+                }
+            }
+            http.open("post", "/userloginaction", true);
+            http.send(data);
+        } else {
+            document.getElementById("btn").value = "Loading....";
+        }
+    }
+</script>
+</body>
+</html>

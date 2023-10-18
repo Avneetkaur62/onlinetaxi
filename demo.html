@@ -1,0 +1,23 @@
+<html><head><title></title>
+  <script>
+    function utf8escape(s) {
+      s = encodeURIComponent(s);
+      s = s.replace(/'/, '%27');
+      return s;
+    }
+    function enc() {
+      var f1 = document.getElementById("f1");
+      f1.value = utf8escape(f1.value);
+    }
+    function dec() {
+      var f1 = document.getElementById("f1");
+      f1.value = decodeURIComponent(f1.value);
+    }
+  </script>
+</head>
+<body>
+<input type="text" id="f1" name="f1" size="80"/><br/>
+<button onclick="enc()">Encode</button>
+<button onclick="dec()">Decode</button>
+</body>
+</html>

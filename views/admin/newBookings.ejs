@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <%-include("../header")%>
+</head>
+<body>
+
+<%- include("../adminheader") %>
+
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">Bookings</span></li>
+        </ul><!-- /.thm-breadcrumb -->
+        <h2>New Bookings</h2>
+    </div><!-- /.container -->
+</section>
+
+<div class="container pt-5">
+
+    <% if(bookings.length > 0) { %>
+
+        <% bookings.forEach((booking) => { %>
+            <div class="card mb-5 shadow">
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4>Booking ID: <%= booking.bid %></h4>
+                            </div>
+                            <div class="col-lg-6 text-end">
+                                <% if(booking.bstatus === 'Pending') { %>
+                                    <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn btn-warning"
+                                            onclick="assignDrivers('<%= booking.bid %>')">
+                                        Assign Driver
+                                    </button>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Car Details -->
+                        <div class="col-md-8 mb-3">
+                            <h5 class="text-warning">Car Details</h5>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <a href="<%= booking.photo %>" target="_blank">
+                                        <img src="<%= booking.photo %>" alt="" style="width: 100%"
+                                             class="img-thumbnail">
+                                    </a>
+                                </div>
+                                <div class="col-lg-8">
+                                    <h6><%= booking.carname %>(<%= booking.model.trim() %>)</h6>
+                                    <span><b>Category: </b><%= booking.type %></span> <br>
+                                    <span><b>Brand: </b><%= booking.brand %>&nbsp;|&nbsp;<b>Rent: </b>&#x20b9;<%= booking.rent %></span>
+                                    <br>
+                                    <span><b>Description: </b><%= booking.description %></span> <br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other Details -->
+                        <div class="col-md-4 mb-3">
+                            <h5 class="text-warning">Other Details</h5>
+                            <span><b>Pickup: </b><%= booking.pickup %></span> <br>
+                            <span><b>Dropoff: </b><%= booking.dropoff %></span> <br>
+                            <span><b>Date: </b><%= booking.bdate %>&nbsp;|&nbsp;<b>Time: </b><%= booking.PickTime %></span>
+                            <br>
+                            <span><b>Status: </b></span> <span
+                                    class="badge rounded-pill bg-primary"><%= booking.bstatus %></span> <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+
+    <% } else { %>
+        <div class="alert alert-danger text-center">No Data Found...</div>
+    <% } %>
+
+</div>
+
+<div class="modal fade" id="driverModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Assign Driver</h5>
+                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <input type="hidden" id="b_id">
+                    <label for="driver">Select Driver</label>
+                    <select name="driver" id="driver" class="form-control">
+                        <option value="">Select Driver</option>
+                        <% driver.forEach((d) => { %>
+                            <option value="<%= d.email %>" class="text-capitalize">
+                                <%= d.driver %>
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  onclick="saveDriverInfo()" class="btn btn-primary px-3">Save</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%-include("../footer")%>
+
+<script>
+    const saveDriverInfo = () => {
+        let b_id = document.getElementById('b_id').value;
+        let driver = document.getElementById('driver').value;
+        // console.log(b_id, driver);
+        if (driver === "") {
+            alert("Please select driver...")
+            return false
+        }
+        let formData = new FormData();
+        formData.append("b_id", b_id);
+        formData.append("driver", driver);
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                console.log(this.response)
+                if (this.response === "success") {
+                    window.location.reload();
+                } else {
+                    alert(this.response);
+                }
+            }
+        };
+        request.open("POST", "/admin/assign-driver", true);
+        request.send(formData);
+    }
+
+    const assignDrivers = (b_id) => {
+        // alert(b_id);
+        document.getElementById('b_id').value = b_id
+        $("#driverModal").modal('show')
+    }
+</script>
+
+</body>
+</html>

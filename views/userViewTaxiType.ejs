@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <%- include("header") %>
+</head>
+<body onload="getTaxiTypes()">
+<%- include("userheader") %>
+
+<section class="inner-banner">
+    <div class="container">
+        <ul class="thm-breadcrumb">
+            <li><a href="/"> Home</a></li>
+            <li><span class="sep">.</span></li>
+            <li><span class="page-title">VIEW TAXI</span></li>
+        </ul>
+        <h2>view taxies for booking</h2>
+    </div>
+</section>
+<br>
+<div class="container">
+    <h3>Taxi Types For Booking:</h3>
+    <hr>
+    <div id="taxiTypes"></div>
+    <div id="cars"></div>
+</div>
+<br>
+<br>
+<br>
+
+<script>
+    function getTaxiTypes() {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                let data = JSON.parse(this.response);
+                console.log(data)
+                let html = "";
+
+                for (let i = 0; i < data.length; i++) {
+                    html += `&nbsp <input onclick='getCars(this.value)' name="taxitypes" id="${data[i].type}"  type="radio" value=${data[i].type}> &nbsp;`;
+                    html += `<label for="${data[i].type}"> ${data[i].type} &nbsp</label>`;
+                }
+
+                document.getElementById("taxiTypes").innerHTML = html;
+            }
+        }
+        http.open("get", "/user/user-view-taxi-types", true);
+        http.send();
+    }
+
+    const getCars = (type_taxi) => {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let data = JSON.parse(this.response);
+                console.log(data)
+                let html = ``;
+                for (let i = 0; i < data.length; i++) {
+                    html += `<div class="row shadow mb-4">`;
+                    html += `<div class="col-lg-4"><img src="${data[i].photo}" alt="" style="width: 100%;height:"></div>`;
+                    html += `<div class="col-lg-8"> <p> <span style ="color:orange;font-weight:bold;">CAR NAME:</span> ${data[i].carname}</p><p> <span style ="color:orange;font-weight:bold;">BRAND:</span> ${data[i].brand}</p><p> <span style ="color:orange;font-weight:bold;">COLOR: </span>${data[i].color}</p><p style ="color:orange;font-weight:bold;">DESCRIPTION:</p> ${data[i].description}<br><br>`;
+                    html += `<a href="/user/booking/${data[i].id}"  class="btn btn-primary mb-3" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;" id="btn">Book A Ride</a></div>`
+                    html += `<br>`;
+                    html += `</div>`;
+                }
+                // html += `<br>`;
+                // html += `<br>`;
+                document.getElementById("cars").innerHTML = html;
+
+            }
+
+        }
+
+        http.open("get", "/user/display-cars?type=" + type_taxi, true);
+        http.send();
+    }
+</script>
+
+<%- include("footer") %>
+</body>
+</html>

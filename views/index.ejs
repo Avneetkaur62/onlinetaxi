@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <%-include("header")%>
+</head>
+<body onload="get_drivers()">
+
+<%-include("navbar")%>
+
+<div class="main-banner-wrapper">
+    <section class="banner-style-two owl-theme owl-carousel no-dots">
+        <div class="slide slide-one" style="background-image: url('images/slider/slider-2-1.jpg');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="banner-circle" style="background-image: url('images/slider/slider-2-1.jpg');">
+                            <div class="inner-block">
+                                <h3>Now enjoy <br> comfortable <br> trip with <br> conexi</h3>
+                                <a href="#" class="banner-btn">Learn More</a>
+                            </div><!-- /.inner-block -->
+                        </div><!-- /.banner-circle -->
+                    </div><!-- /.col-lg-12 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.slide -->
+        <div class="slide slide-two" style="background-image: url(images/slider/slider-2-2.jpg);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="banner-circle" style="background-image: url(images/slider/slider-2-2.jpg);">
+                            <div class="inner-block">
+                                <h3>Now enjoy <br> comfortable <br> trip with <br> conexi</h3>
+                                <a href="#" class="banner-btn">Learn More</a>
+                            </div><!-- /.inner-block -->
+                        </div><!-- /.banner-circle -->
+                    </div><!-- /.col-lg-12 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.slide -->
+    </section><!-- /.banner-style-one -->
+    <div class="carousel-btn-block banner-carousel-btn">
+        <span class="carousel-btn left-btn"><i class="conexi-icon-left"></i></span>
+        <span class="carousel-btn right-btn"><i class="conexi-icon-right"></i></span>
+    </div><!-- /.carousel-btn-block banner-carousel-btn -->
+</div><!-- /.main-banner-wrapper -->
+<section class="about-style-three clearfix">
+    <div class="left-block">
+        <div class="content-block">
+            <div class="image-block">
+                <img src="images/resources/book-1-1.jpg" alt="Awesome Image"/>
+            </div><!-- /.image-block -->
+            <div class="block-title">
+                <div class="dot-line"></div><!-- /.dot-line -->
+                <p>We’re the best in your town</p>
+                <h2>Welcome to the <br> most trusted <br> company</h2>
+            </div><!-- /.block-title -->
+            <p> With Our Convenient online booking system, a user can book a taxi with just few taps on ...Our fleet of trusted professional drivers and well-maintained vehicles ensure a safe and comfortable ride every time.  </p>
+            <hr class="style-one" />
+            <div class="tag-line">
+                <span>Safe .</span>
+                <span>Fast .</span>
+                <span>Quick .</span>
+            </div><!-- /.tag-line -->
+        </div><!-- /.content-block -->
+    </div><!-- /.left-block -->
+    <div class="right-block">
+        <div class="right-upper-block">
+            <div class="content-block">
+                <div class="block-title">
+                    <div class="dot-line"></div><!-- /.dot-line -->
+                    <p class="light-2"> Are you Looking for taxi?</p>
+                    <h2 class="light">Make your <br> booking now </h2>
+                </div><!-- /.block-title -->
+                <form action="#" class="booking-form-one">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-holder">
+                                <input type="text" name="name" placeholder="Your name">
+                            </div><!-- /.input-holder -->
+                        </div><!-- /.col-lg-6 -->
+                        <div class="col-lg-6">
+                            <div class="input-holder">
+                                <input type="text" name="name" placeholder="Email address">
+                            </div><!-- /.input-holder -->
+                        </div><!-- /.col-lg-6 -->
+                        <div class="col-lg-12">
+                            <div class="input-holder">
+                                <input type="text" name="name" placeholder="Passengers #">
+                            </div><!-- /.input-holder -->
+                        </div><!-- /.col-lg-12 -->
+                        <div class="col-lg-12">
+                            <div class="input-holder">
+                                <input type="text" name="name" placeholder="Pick up address">
+                            </div><!-- /.input-holder -->
+                        </div><!-- /.col-lg-12 -->
+                        <div class="col-lg-12">
+                            <div class="input-holder">
+                                <input type="text" name="name" placeholder="Drop off address">
+                            </div><!-- /.input-holder -->
+                        </div><!-- /.col-lg-12 -->
+                        <div class="col-lg-6">
+                            <div class="input-holder">
+                                <input type="text" name="name" placeholder="Select date">
+                                <i class="conexi-icon-small-calendar"></i>
+                            </div><!-- /.input-holder -->
+                        </div><!-- /.col-lg-6 -->
+                        <div class="col-lg-6">
+                            <div class="input-holder">
+                                <select class="selectpicker">
+                                    <option>Select Time</option>
+                                    <option>10AM-10.59AM</option>
+                                    <option>12PM-12.59PM</option>
+                                    <option>1PM-1.59PM</option>
+                                    <option>2PM-2.59PM</option>
+                                </select>
+                                <i class="conexi-icon-clock"></i>
+                            </div><!-- /.input-holder -->
+                        </div><!-- /.col-lg-6 -->
+                        <div class="col-lg-12">
+                            <div class="input-holder">
+                                <li><a href="/user/select-taxi" style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;">  Book Now </a></li>
+                            </div><!-- /.input-holder -->
+                        </div><!-- /.col-lg-12 -->
+                    </div><!-- /.row -->
+                </form><!-- /.booking-form-one -->
+            </div><!-- /.content-block -->
+        </div><!-- /.right-upper-block -->
+        <div class="right-bottom-block">
+            <div class="content-block cta-block">
+                <div class="icon-block">
+                    <i class="conexi-icon-phone-call"></i>
+                </div><!-- /.icon-block -->
+                <div class="text-block">
+                    <p>Call and book emergency taxi</p>
+                    <a href="callto:8888880000">8511900004</a>
+                </div><!-- /.text-block -->
+            </div><!-- /.content-block -->
+        </div><!-- /.right-bottom-block -->
+    </div><!-- /.right-block -->
+</section><!-- /.about-style-three -->
+<section class="offer-style-one">
+    <div class="container">
+        <div class="block-title text-center">
+            <div class="dot-line"></div><!-- /.dot-line -->
+            <p>Check out our benefits</p>
+            <h2>What we’re offering</h2>
+        </div><!-- /.block-title -->
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="single-offer-one hvr-float-shadow">
+                    <div class="image-block">
+
+                        <img src="images/resources/offer-1-1.jpg" alt="Awesome Image" />
+                    </div><!-- /.image-block -->
+                    <div class="text-block">
+                        <h3>Public Transportation</h3>
+                        <p>Committed to help cities around the world make public transportation more accessible, equitable, and efficient.</p>
+
+                    </div><!-- /.text-block -->
+                </div><!-- /.single-offer-one -->
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <div class="single-offer-one hvr-float-shadow">
+                    <div class="image-block">
+
+                        <img src="images/resources/offer-1-2.jpg" alt="Awesome Image" />
+                    </div><!-- /.image-block -->
+                    <div class="text-block">
+                        <h3>Safety & Transparency </h3>
+                        <p> Before the ride, a user can check the driver’s profile, including their name and identity.</p>
+
+                    </div><!-- /.text-block -->
+                </div><!-- /.single-offer-one -->
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <div class="single-offer-one hvr-float-shadow">
+                    <div class="image-block">
+
+                        <img src="images/resources/offer-1-3.jpg" alt="Awesome Image" />
+                    </div><!-- /.image-block -->
+                    <div class="text-block">
+                        <h3>24/7 Customer Support</h3>
+                        <p>A dedicated 24x7 customer support team always at your service to help solve any problem.</p>
+
+                    </div><!-- /.text-block -->
+                </div><!-- /.single-offer-one -->
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.offer-style-one -->
+<section class="taxi-fare-one">
+    <div class="container">
+        <div class="block-title text-center">
+            <div class="dot-line"></div><!-- /.dot-line -->
+            <p>Our all taxi rates</p>
+            <h2>Check taxi fares</h2>
+        </div><!-- /.block-title -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="single-taxi-fare-one thm-base-bg hvr-float-shadow">
+                    <div class="top-block">
+                        <div class="icon-block">
+                            <i class="conexi-icon-taxi"></i>
+                        </div><!-- /.icon-block -->
+                        <div class="text-block">
+                            <h3>All taxi fares</h3>
+                            <p>Here see the fares and book the ride.</p>
+                        </div><!-- /.text-block -->
+                    </div><!-- /.top-block -->
+                    <ul class="features-list">
+                        <li>
+                            <div class="name-line">Initial charge:</div><!-- /.name-line -->
+                            <div class="price-line"> &#8377;600</div><!-- /.price-line -->
+                        </li>
+                        <li>
+                            <div class="name-line">Additional Kilometre:</div><!-- /.name-line -->
+                            <div class="price-line">&#8377;40</div><!-- /.price-line -->
+                        </li>
+                        <li>
+                            <div class="name-line">Per 2 minutes in stopped traffic:</div><!-- /.name-line -->
+                            <div class="price-line"> &#8377;30</div><!-- /.price-line -->
+                        </li>
+                    </ul><!-- /.features-list -->
+                    <div class="button-block">
+                        <a href="/user/userhome/" class="fare-btn">Order Taxi Now</a>
+                    </div><!-- /.button-block -->
+                </div><!-- /.single-taxi-fare-one -->
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-6">
+                <div class="single-taxi-fare-one thm-base-bg hvr-float-shadow">
+                    <div class="top-block">
+                        <div class="icon-block">
+                            <i class="conexi-icon-taxi"></i>
+                        </div><!-- /.icon-block -->
+                        <div class="text-block">
+                            <h3>Additional fares</h3>
+                            <p>Charges depend according to the car type.But an over view is here</p>
+                        </div><!-- /.text-block -->
+                    </div><!-- /.top-block -->
+                    <ul class="features-list">
+                        <li>
+                            <div class="name-line">One hour of waiting:</div><!-- /.name-line -->
+                            <div class="price-line">&#8377;100</div><!-- /.price-line -->
+                        </li>
+                        <li>
+                            <div class="name-line">4pm to 8pm weekday surcharge:</div><!-- /.name-line -->
+                            <div class="price-line">&#8377;400</div><!-- /.price-line -->
+                        </li>
+                        <li>
+                            <div class="name-line">8pm to 6am night surcharge:</div><!-- /.name-line -->
+                            <div class="price-line">&#8377;300</div><!-- /.price-line -->
+                        </li>
+                    </ul><!-- /.features-list -->
+                    <div class="button-block">
+                        <a href="/user/userhome/" class="fare-btn">Order Taxi Now</a>
+                    </div><!-- /.button-block -->
+                </div><!-- /.single-taxi-fare-one -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+        <div class="block-text text-center">
+            <p>For more information regarding the fares.Just go and check <br> Our Taxis Page available in the navbar .Just check out the pages dropdown</p>
+        </div><!-- /.block-text -->
+    </div><!-- /.container -->
+</section><!-- /.taxi-fare-one -->
+<hr class="style-one">
+<div class="brand-carousel-wrapper">
+    <div class="container">
+        <div class="brand-carousel-one owl-theme owl-carousel">
+            <div class="item">
+                <img src="images/brand/brand-1-1.jpg" alt="Awesome Image" />
+            </div><!-- /.item -->
+            <div class="item">
+                <img src="images/brand/brand-1-2.jpg" alt="Awesome Image" />
+            </div><!-- /.item -->
+            <div class="item">
+                <img src="images/brand/brand-1-3.jpg" alt="Awesome Image" />
+            </div><!-- /.item -->
+            <div class="item">
+                <img src="images/brand/brand-1-4.jpg" alt="Awesome Image" />
+            </div><!-- /.item -->
+            <div class="item">
+                <img src="images/brand/brand-1-5.jpg" alt="Awesome Image" />
+            </div><!-- /.item -->
+            <div class="item">
+                <img src="images/brand/brand-1-1.jpg" alt="Awesome Image" />
+            </div><!-- /.item -->
+            <div class="item">
+                <img src="images/brand/brand-1-2.jpg" alt="Awesome Image" />
+            </div><!-- /.item -->
+            <div class="item">
+                <img src="images/brand/brand-1-3.jpg" alt="Awesome Image" />
+            </div><!-- /.item -->
+            <div class="item">
+                <img src="images/brand/brand-1-4.jpg" alt="Awesome Image" />
+            </div><!-- /.item -->
+            <div class="item">
+                <img src="images/brand/brand-1-5.jpg" alt="Awesome Image" />
+            </div><!-- /.item -->
+        </div><!-- /.brand-carousel-one -->
+    </div><!-- /.container -->
+</div><!-- /.brand-carousel-wrapper -->
+<section class="testimonials-style-one">
+    <div class="container">
+        <div class="block-title text-center">
+            <div class="dot-line"></div><!-- /.dot-line -->
+            <p class="light">Latest blog posts</p>
+            <h2 class="light">News & updates</h2>
+        </div><!-- /.block-title -->
+        <div class="testimonials-one-pager">
+            <a href="#" class="pager-item active" data-slide-index="1"><img src="images/resources/testi-1-1.jpg" alt="Awesome Image" /></a>
+            <a href="#" class="pager-item" data-slide-index="2"><img src="images/resources/testi-1-2.jpg" alt="Awesome Image" /></a>
+            <a href="#" class="pager-item" data-slide-index="3"><img src="images/resources/testi-1-3.jpg" alt="Awesome Image" /></a>
+        </div><!-- /.testimonials-one-pager -->
+        <ul class="slider testimonials-slider-one">
+            <li class="slide-item">
+                <div class="single-testimonial-one">
+                    <p>This is due to their excellent service, competitive pricing and customer support. It’s throughly refresing to get such a personal touch.</p>
+                    <h3>Shana Druckman</h3>
+                </div><!-- /.single-testimonial-one -->
+            </li>
+            <li class="slide-item">
+                <div class="single-testimonial-one">
+                    <p>This is due to their excellent service, competitive pricing and customer support. It’s throughly refresing to get such a personal touch.</p>
+                    <h3>Emanuel Mcnamara</h3>
+                </div><!-- /.single-testimonial-one -->
+            </li>
+            <li class="slide-item">
+                <div class="single-testimonial-one">
+                    <p>This is due to their excellent service, competitive pricing and customer support. It’s throughly refresing to get such a personal touch.</p>
+                    <h3>Jodie Hadlock</h3>
+                </div><!-- /.single-testimonial-one -->
+            </li>
+        </ul>
+    </div><!-- /.container -->
+    <div class="testimonials-one-slider-btn">
+        <span class="carousel-btn left-btn"><i class="conexi-icon-left"></i></span>
+        <span class="carousel-btn right-btn"><i class="conexi-icon-right"></i></span>
+    </div><!-- /.carousel-btn-block banner-carousel-btn -->
+</section><!-- /.testimonials-style-one -->
+<section class="taxi-style-one">
+    <div class="container">
+        <div class="block-title text-center">
+            <div class="dot-line"></div> <!--/.dot-line -->
+            <p>Our best cars</p>
+            <h2>Choose taxi</h2>
+        </div><!-- /.block-title -->
+        <ul class="nav nav-tabs tab-title" role="tablist">
+
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane show active  animated fadeInUp" id="hybrid">
+                <div class="row">
+                    <% cars.forEach(car => { %>
+
+                    <div class="col-lg-4">
+                        <div class="single-taxi-one">
+                            <div class="inner-content">
+                                <img src="<%= car.photo %>"style="width: 100%; height: 255px"  alt="Awesome Image" />
+                               <h3> <%= car.carname %></h3>
+
+
+                                <ul class="feature-list">
+                                    <li>
+                                        <span class="name-line"> Rent :</span>
+                                        <span class="price-line">&#8377;<%= car.rent %></span>
+                                    </li>
+                                    <li>
+                                        <span class="name-line">Brand:</span>
+                                        <span class="price-line"><%= car.brand %></span>
+                                    </li>
+
+                                </ul><!-- /.feature-list -->
+                                <a href="/single-taxi/<%= car.id %>" class="book-taxi-btn">View Details</a>
+                            </div><!-- /.inner-content -->
+                        </div><!-- /.single-taxi-one -->
+                    </div><!-- /.col-lg-4 -->
+                    <% })%>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- /.taxi-style-one -->
+<!-- /.cta-style-three -->
+<section class="team-style-one">
+<!--    <img src="images/background/team-bg-1-1.png" class="team-bg" alt="Awesome Image" />-->
+    <div class="container">
+        <div class="block-title text-center">
+            <div class="dot-line"></div><!-- /.dot-line -->
+            <p class="light-2">Meet our taxi drivers</p>
+            <h2 class="light">Expert drivers</h2>
+        </div><!-- /.block-title -->
+        <div class="row" id="drivers">
+
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.team-style-one -->
+
+<section class="cta-style-two no-zigzag">
+    <div class="container">
+        <div class="content-block">
+            <p>Make a call or fill form</p>
+            <h3>Call our agent to get a quote.</h3>
+        </div><!-- /.content-block -->
+        <div class="button-block">
+            <a href="/user/select-taxi" class="cta-btn">Book Taxi Now</a>
+        </div><!-- /.button-block -->
+    </div><!-- /.container -->
+</section><!-- /.cta-/hestyle-two -->
+
+<%-include("footer")%>
+<script>
+    function get_drivers(){
+        var http=new XMLHttpRequest();
+        http.onreadystatechange = function (){
+            if(this.readyState == 4 && this.status == 200){
+                if(this.response!=""){
+                    var data=JSON.parse(this.response);
+                    var output=``;
+                    for(let i=0;i<3;i++){
+                        output+=`<div class="col-lg-4">
+                <div class="single-team-one">
+                    <div class="image-block">
+                        <img src="${data[i].photo}" alt="Awesome Image" style="width:100%; heigth:360px" />
+                    </div><!-- /.image-block -->
+                    <div class="text-block">
+                        <h3>${data[i].driver}</h3>
+                        <p>Taxi Driver</p>
+<a href="/single-driver/${data[i].email}"><button class="btn btn-primary"style="display: inline-block; vertical-align: middle; color: black; font-size: 16px; font-weight: 600; background-color:#ffbe07;border-radius: 29px; border-color: black;padding: 12px 77px;transition: all .4s ease;margin-top: 30px;">View Details</button></a>
+
+                    </div><!-- /.text-block -->
+                </div><!-- /.single-team-one -->
+            </div>`;
+                    }
+                    document.getElementById("drivers").innerHTML = output;
+                }
+            }
+        }
+        http.open("get","/admin/viewdriversaction",true);
+        http.send();
+    }
+</script>
+</body>
+</html>
